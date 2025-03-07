@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Espanta Zombies - Versión Terrorífica</title>
+  <meta name="description" content="Descubre Espanta Zombies: una experiencia ancestral y terrorífica con productos artesanales, snacks, postres y más, que combinan tradición y misticismo.">
+  <link rel="icon" type="image/png" href="https://image.pollinations.ai/prompt/Espanta%20Zombies%20Icon%20dark%20fantasy">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Fuente temática -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Creepster&display=swap">
+  <!-- AOS para animaciones -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" integrity="sha512-Ho0A0jNCq3NE1bf+V0S1kZbb0J1npbBjLqC6y81hnWZh9T/IpB65wcdkOSyFknGP7lA9O6OMFF0oe2SgCLz6nA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    /* Reset y estilos generales */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Creepster', cursive;
+      background: url("https://image.pollinations.ai/prompt/Espanta%20Zombies%20background%20dark%20fantasy") no-repeat center center fixed;
+      background-size: cover;
+      color: #f1f1f1;
+      text-align: center;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      transition: background 1s, color 1s;
+    }
+    /* Modo terror (fondo alternativo) */
+    body.dark-mode {
+      background: #000 url("https://image.pollinations.ai/prompt/dark%20haunted%20forest%20background") no-repeat center center fixed;
+      background-size: cover;
+      color: #eaeaea;
+    }
+    /* Contenedor de Particles.js */
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      top: 0;
+      left: 0;
+    }
+    header {
+      background-color: rgba(0,0,0,0.7);
+      padding: 40px 20px;
+      text-shadow: 3px 3px 5px #000;
+      position: relative;
+      overflow: hidden;
+    }
+    header h1 {
+      font-size: 3.5em;
+      color: #ffdc00;
+      margin-bottom: 10px;
+      animation: neonFlash 2s infinite alternate;
+    }
+    header p { font-size: 1.2em; }
+    
+    /* Botón para alternar modo terror */
+    .lights-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(0,0,0,0.6);
+      border: 2px solid #ff0000;
+      color: #ff0000;
+      font-size: 1em;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+      z-index: 210;
+    }
+    .lights-toggle:hover {
+      background: rgba(0,0,0,0.9);
+      color: #fff;
+    }
+    
+    /* Menú de navegación */
+    nav {
+      background-color: rgba(0,0,0,0.8);
+      padding: 10px 0;
+      margin-bottom: 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    nav ul { list-style: none; }
+    nav li { display: inline-block; margin: 0 15px; }
+    nav a {
+      color: #00ff00;
+      text-decoration: none;
+      font-size: 1.2em;
+      transition: color 0.3s;
+    }
+    nav a:hover { color: #ff00ff; }
+    
+    /* Sección de Música Inicial (Mixcloud) */
+    .music-initial {
+      background-color: rgba(0,0,0,0.65);
+      margin: 20px auto;
+      padding: 15px;
+      border-radius: 10px;
+      max-width: 700px;
+      box-shadow: 0 0 15px #00ff00;
+    }
+    .music-initial h2 {
+      font-size: 2em;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px #000;
+    }
+    .music-initial iframe {
+      width: 100%;
+      height: 120px;
+      border: none;
+    }
+    
+    /* Secciones generales */
+    section {
+      padding: 30px 20px;
+      margin: 20px 40px;
+      background-color: rgba(0,0,0,0.6);
+      border-radius: 10px;
+      animation: fadeIn 2s;
+      position: relative;
+    }
+    section h2 {
+      font-size: 2.5em;
+      margin-bottom: 15px;
+      text-shadow: 2px 2px 4px #000;
+    }
+    section p { font-size: 1.1em; margin-bottom: 15px; }
+    
+    /* Menú de ítems */
+    .menu-item {
+      display: inline-block;
+      width: 260px;
+      margin: 15px;
+      background-color: rgba(255,255,255,0.1);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .menu-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #00ff00;
+    }
+    .menu-item img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .menu-item h3 {
+      margin: 10px 0;
+      font-size: 1.3em;
+      color: #ffdc00;
+    }
+    .price {
+      font-size: 1.2em;
+      color: #0aff0a;
+      margin-bottom: 10px;
+    }
+    .menu-item p { padding: 0 10px 10px; }
+    
+    /* Sección Testimonios */
+    .testimonios {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .testimonio {
+      background-color: rgba(0,0,0,0.5);
+      padding: 20px;
+      border-radius: 10px;
+      width: 300px;
+    }
+    .testimonio p { font-size: 1em; margin-bottom: 10px; }
+    .testimonio h4 { font-size: 1.2em; color: #ffdc00; }
+    
+    /* Sección Newsletter */
+    .newsletter {
+      background-color: rgba(0,0,0,0.7);
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px auto;
+      max-width: 500px;
+    }
+    .newsletter input[type="email"] {
+      width: 70%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+    .newsletter button {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      background-color: #00ff00;
+      color: #000;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .newsletter button:hover {
+      background-color: #0aff0a;
+    }
+    
+    /* Sección Ensaladas de Frutas */
+    #ensaladas {
+      padding: 30px 20px;
+      margin: 20px 40px;
+      background-color: rgba(0,0,0,0.6);
+      border-radius: 10px;
+      animation: fadeIn 2s;
+    }
+    #ensaladas h2 {
+      font-size: 2.5em;
+      margin-bottom: 15px;
+      text-shadow: 2px 2px 4px #000;
+    }
+    
+    /* Sección Galería de Zombies */
+    .galeria {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .galeria img {
+      max-width: 300px;
+      border: 5px solid #00ff00;
+      border-radius: 10px;
+      transition: transform 0.3s;
+    }
+    .galeria img:hover {
+      transform: scale(1.05);
+    }
+    
+    /* Sección Puzzle Interactivo */
+    #puzzle {
+      padding: 30px 20px;
+      margin: 20px 40px;
+      background-color: rgba(0,0,0,0.6);
+      border-radius: 10px;
+      animation: fadeIn 2s;
+    }
+    #puzzle h2 {
+      font-size: 2.5em;
+      margin-bottom: 15px;
+      text-shadow: 2px 2px 4px #000;
+    }
+    #puzzleCanvas {
+      background: #000;
+      border: 2px solid #00ff00;
+      border-radius: 10px;
+      display: block;
+      margin: 0 auto;
+    }
+    
+    /* Sección Contacto */
+    .contacto {
+      margin: 20px 0;
+    }
+    .whatsapp-link {
+      color: #25D366;
+      text-decoration: none;
+      font-size: 1.2em;
+      border: 2px solid #25D366;
+      padding: 10px;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+      display: inline-block;
+      margin-top: 10px;
+    }
+    .whatsapp-link:hover { background-color: #25D366; color: #fff; }
+    .qr-code {
+      margin: 10px auto;
+      width: 200px;
+      border: 3px solid #00ff00;
+      border-radius: 10px;
+    }
+    
+    /* Footer */
+    footer {
+      padding: 20px;
+      background-color: rgba(0,0,0,0.9);
+      font-size: 0.9em;
+      margin-top: 20px;
+    }
+    
+    /* Botón de volver arriba */
+    .back-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(0,0,0,0.7);
+      color: #ffdc00;
+      border: none;
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      z-index: 100;
+      transition: background 0.3s;
+    }
+    .back-to-top:hover { background: rgba(0,0,0,0.9); }
+    
+    /* Animaciones */
+    @keyframes neonFlash {
+      from { text-shadow: 0 0 10px #ffdc00, 0 0 20px #ffdc00; }
+      to { text-shadow: 0 0 20px #ff0000, 0 0 30px #ff0000; color: #ff0000; }
+    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  </style>
+</head>
+<body>
+  <!-- Div de Particles.js -->
+  <div id="particles-js"></div>
+  
+  <!-- Sección de Música Inicial (Mixcloud) -->
+  <div class="music-initial" data-aos="fade-up">
+    <h2>Música Inicial</h2>
+    <iframe src="https://www.mixcloud.com/widget/iframe/?feed=%2Fjeisson-alexander-villanueva-s%2F&hide_cover=1&light=1&autoplay=1" frameborder="0" allow="autoplay"></iframe>
+    <p>Si no se inicia automáticamente, haz clic en el reproductor.</p>
+  </div>
+  
+  <!-- Botón para alternar modo terror -->
+  <button class="lights-toggle" id="lightsToggle">Terror Mode Off</button>
+  
+  <!-- Encabezado -->
+  <header data-aos="fade-down">
+    <h1>ESPANTA ZOMBIES</h1>
+    <p>Elixir del Despertar - Vive la experiencia ancestral</p>
+  </header>
+  
+  <!-- Menú de navegación -->
+  <nav data-aos="fade-right">
+    <ul>
+      <li><a href="#intro">Inicio</a></li>
+      <li><a href="#guarapos">Guarapos</a></li>
+      <li><a href="#snacks">Snacks</a></li>
+      <li><a href="#postres">Postres</a></li>
+      <li><a href="#ensaladas">Ensaladas</a></li>
+      <li><a href="#puzzle">Puzzle Interactivo</a></li>
+      <li><a href="#galeria">Galería</a></li>
+      <li><a href="#testimonios">Testimonios</a></li>
+      <li><a href="#newsletter">Newsletter</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </nav>
+  
+  <!-- Sección Intro -->
+  <section id="intro" data-aos="fade-up">
+    <h2>Bienvenido a la Revolución del Sabor</h2>
+    <p>Descubre los secretos de una bebida ancestral que despierta cuerpo, alma y mente. Atrévete a saborear lo prohibido en cada sorbo.</p>
+  </section>
+  
+  <!-- Sección Guarapos -->
+  <section id="guarapos" data-aos="fade-up">
+    <h2>Guarapos</h2>
+    <div class="menu-item" data-aos="flip-left">
+      <img src="https://image.pollinations.ai/prompt/Guarapo%20de%20Pi%C3%B1a%20dark%20fantasy" alt="Guarapo de Piña">
+      <h3>Guarapo de Piña</h3>
+      <p class="price">$5.000</p>
+      <p>Elaborado con piñas frescas y fermentación natural, este guarapo refleja la maestría artesanal y ofrece un sabor inigualable.</p>
+    </div>
+    <div class="menu-item" data-aos="flip-left" data-aos-delay="100">
+      <img src="https://image.pollinations.ai/prompt/Guarapo%20de%20Mora%20dark%20fantasy" alt="Guarapo de Mora">
+      <h3>Guarapo de Mora</h3>
+      <p class="price">$5.000</p>
+      <p>Con moras recolectadas a mano y técnicas tradicionales, su fusión de dulzura y acidez demuestra una insuperable maestría artesanal.</p>
+    </div>
+    <div class="menu-item" data-aos="flip-left" data-aos-delay="200">
+      <img src="https://image.pollinations.ai/prompt/Guarapo%20de%20Guayaba%20dark%20fantasy" alt="Guarapo de Guayaba">
+      <h3>Guarapo de Guayaba</h3>
+      <p class="price">$5.000</p>
+      <p>Elaborado con guayabas selectas y métodos artesanales ancestrales, te transporta a un viaje de sabores intensos y auténticos.</p>
+    </div>
+  </section>
+  
+  <!-- Sección Snacks -->
+  <section id="snacks" data-aos="fade-up">
+    <h2>Snacks</h2>
+    <div class="menu-item" data-aos="flip-left">
+      <img src="https://image.pollinations.ai/prompt/Crujientes%20del%20Inframundo%20snack%20dark%20fantasy" alt="Crujientes del Inframundo">
+      <h3>Crujientes del Inframundo</h3>
+      <p class="price">$10.000</p>
+      <p>Bocados intensamente crujientes, condimentados con especias secretas que evocan los misterios del inframundo.</p>
+    </div>
+    <div class="menu-item" data-aos="flip-left" data-aos-delay="100">
+      <img src="https://image.pollinations.ai/prompt/Picante%20Despierta%20Almas%20snack%20dark%20fantasy" alt="Picante Despierta Almas">
+      <h3>Picante Despierta Almas</h3>
+      <p class="price">$15.000</p>
+      <p>Un snack ardiente que, con su picante vibrante, reanima y despierta cada fibra de tu ser.</p>
+    </div>
+    <div class="menu-item" data-aos="flip-left" data-aos-delay="200">
+      <img src="https://image.pollinations.ai/prompt/Sabor%20de%20la%20Cripta%20snack%20dark%20fantasy" alt="Sabor de la Cripta">
+      <h3>Sabor de la Cripta</h3>
+      <p class="price">$10.000</p>
+      <p>Enigmático y profundo, este bocado combina tradición ancestral y un toque de misterio sepulcral.</p>
+    </div>
+    <div class="menu-item" data-aos="flip-left" data-aos-delay="300">
+      <img src="https://image.pollinations.ai/prompt/Bocados%20del%20M%C3%A1s%20All%C3%A1%20snack%20dark%20fantasy" alt="Bocados del Más Allá">
+      <h3>Bocados del Más Allá</h3>
+      <p class="price">$10.000</p>
+      <p>Con un sabor intenso que trasciende los límites terrenales, cada bocado te invita a explorar lo desconocido.</p>
+    </div>
+    <div class="menu-item" data-aos="flip-left" data-aos-delay="400">
+      <img src="https://image.pollinations.ai/prompt/Tentaci%C3%B3n%20del%20Inframundo%20snack%20dark%20fantasy" alt="Tentación del Inframundo">
+      <h3>Tentación del Inframundo</h3>
+      <p class="price">$10.000</p>
+      <p>Un irresistible placer con notas enigmáticas que seducen y despiertan los sentidos más oscuros.</p>
+    </div>
+  </section>
+  
+  <!-- Sección Postres -->
+  <section id="postres" data-aos="fade-up">
+    <h2>Postres</h2>
+    <div class="menu-item" data-aos="flip-left">
+      <img src="https://image.pollinations.ai/prompt/Chocolate%20Tenebroso%20dessert%20dark%20fantasy" alt="Chocolate Tenebroso">
+      <h3>Chocolate Tenebroso</h3>
+      <p class="price">$25.000</p>
+      <p>Un placer oscuro elaborado con chocolate de alta calidad y técnicas artesanales que hechizan cada bocado.</p>
+    </div>
+    <div class="menu-item" data-aos="flip-left" data-aos-delay="100">
+      <img src="https://image.pollinations.ai/prompt/Frutas%20del%20M%C3%A1s%20All%C3%A1%20dessert%20dark%20fantasy" alt="Frutas del Más Allá">
+      <h3>Frutas del Más Allá</h3>
+      <p class="price">$25.000</p>
+      <p>Una explosión mística de sabores frutales que combina la frescura y el enigma de lo prohibido.</p>
+    </div>
+    <div class="menu-item" data-aos="flip-left" data-aos-delay="200">
+      <img src="https://image.pollinations.ai/prompt/Crema%20Espectral%20dessert%20dark%20fantasy" alt="Crema Espectral">
+      <h3>Crema Espectral</h3>
+      <p class="price">$25.000</p>
+      <p>Suave, cremosa y etérea, esta delicia fusiona texturas que parecen de otro mundo.</p>
+    </div>
+    <div class="menu-item" data-aos="flip-left" data-aos-delay="300">
+      <img src="https://image.pollinations.ai/prompt/Mousse%20Fantasmal%20dessert%20dark%20fantasy" alt="Mousse Fantasmal">
+      <h3>Mousse Fantasmal</h3>
+      <p class="price">$25.000</p>
+      <p>Ligera y misteriosa, su textura se funde en la boca con un sabor casi sobrenatural.</p>
+    </div>
+    <div class="menu-item" data-aos="flip-left" data-aos-delay="400">
+      <img src="https://image.pollinations.ai/prompt/Helado%20de%20la%20Noche%20dessert%20dark%20fantasy" alt="Helado de la Noche">
+      <h3>Helado de la Noche</h3>
+      <p class="price">$25.000</p>
+      <p>Refrescante y enigmático, este helado combina frescura con el misterio de la oscuridad nocturna.</p>
+    </div>
+  </section>
+  
+  <!-- Sección Ensaladas de Frutas -->
+  <section id="ensaladas" data-aos="fade-up">
+    <h2>Ensaladas de Frutas</h2>
+    <div class="menu-item" data-aos="flip-left">
+      <img src="https://image.pollinations.ai/prompt/Ensalada%20Tropical%20dark%20fantasy" alt="Ensalada Tropical">
+      <h3>Ensalada Tropical</h3>
+      <p class="price">$25.000</p>
+      <p>Una fresca y colorida mezcla de frutas tropicales que evoca el espíritu vibrante de lo exótico.</p>
+    </div>
+    <div class="menu-item" data-aos="flip-left" data-aos-delay="100">
+      <img src="https://image.pollinations.ai/prompt/Ensalada%20Ex%C3%B3tica%20dark%20fantasy" alt="Ensalada Exótica">
+      <h3>Ensalada Exótica</h3>
+      <p class="price">$25.000</p>
+      <p>Combinación inusual de frutas raras que resalta sabores intensos y únicos, llenos de carácter.</p>
+    </div>
+    <div class="menu-item" data-aos="flip-left" data-aos-delay="200">
+      <img src="https://image.pollinations.ai/prompt/Ensalada%20del%20M%C3%A1s%20All%C3%A1%20dark%20fantasy" alt="Ensalada del Más Allá">
+      <h3>Ensalada del Más Allá</h3>
+      <p class="price">$25.000</p>
+      <p>Una ensalada que trasciende lo terrenal, combinando sabores que invitan a explorar lo desconocido.</p>
+    </div>
+    <div class="menu-item" data-aos="flip-left" data-aos-delay="300">
+      <img src="https://image.pollinations.ai/prompt/Ensalada%20Fantasmal%20dark%20fantasy" alt="Ensalada Fantasmal">
+      <h3>Ensalada Fantasmal</h3>
+      <p class="price">$25.000</p>
+      <p>Delicada y enigmática, esta ensalada sorprende con un toque sutil de misterio en cada bocado.</p>
+    </div>
+    <div class="menu-item" data-aos="flip-left" data-aos-delay="400">
+      <img src="https://image.pollinations.ai/prompt/Ensalada%20M%C3%ADstica%20dark%20fantasy" alt="Ensalada Mística">
+      <h3>Ensalada Mística</h3>
+      <p class="price">$25.000</p>
+      <p>Una fusión mágica de sabores y colores, perfecta para despertar los sentidos y el alma.</p>
+    </div>
+  </section>
+  
+  <!-- Sección Puzzle Interactivo -->
+  <section id="puzzle" data-aos="fade-up">
+    <h2>Puzzle Interactivo</h2>
+    <canvas id="puzzleCanvas" width="400" height="400"></canvas>
+    <p>Reordena las piezas para completar la imagen y descubre el enigma oculto en cada fragmento.</p>
+  </section>
+  
+  <!-- Sección Galería de Zombies -->
+  <section id="galeria" data-aos="fade-up">
+    <h2>Galería de Zombies</h2>
+    <div class="galeria">
+      <img src="https://image.pollinations.ai/prompt/horror+zombie+cyberpunk+dark+fantasy" alt="Zombie Imagen 1">
+      <img src="https://image.pollinations.ai/prompt/horror+zombie+digital+art+dark+fantasy" alt="Zombie Imagen 2">
+    </div>
+  </section>
+  
+  <!-- Sección Testimonios -->
+  <section id="testimonios" data-aos="fade-up">
+    <h2>Testimonios</h2>
+    <div class="testimonios">
+      <div class="testimonio" data-aos="zoom-in">
+        <p>"Una experiencia única, cada sorbo es como despertar de un sueño místico."</p>
+        <h4>- Mariana R.</h4>
+      </div>
+      <div class="testimonio" data-aos="zoom-in" data-aos-delay="100">
+        <p>"Los sabores son intensos y revolucionarios, definitivamente algo fuera de este mundo."</p>
+        <h4>- Carlos M.</h4>
+      </div>
+      <div class="testimonio" data-aos="zoom-in" data-aos-delay="200">
+        <p>"El ambiente, la música y la energía crean una experiencia inolvidable."</p>
+        <h4>- Laura G.</h4>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Sección Newsletter -->
+  <section id="newsletter" data-aos="fade-up">
+    <h2>Suscríbete a nuestro Newsletter</h2>
+    <div class="newsletter">
+      <p>Recibe las últimas noticias, promociones y secretos del Elixir del Despertar.</p>
+      <form action="#" method="post">
+        <input type="email" name="email" placeholder="Tu correo electrónico" required>
+        <button type="submit">Suscribirme</button>
+      </form>
+    </div>
+  </section>
+  
+  <!-- Sección Contacto -->
+  <section id="contacto" class="contacto" data-aos="fade-up">
+    <h2>Contáctanos</h2>
+    <p>¿Listo para una experiencia Espanta Zombies?</p>
+    <p>WhatsApp: <strong>3115668610</strong></p>
+    <a class="whatsapp-link" href="https://wa.me/573115668610" target="_blank">Chatea con nosotros</a>
+    <p>O escanea el siguiente código QR:</p>
+    <img class="qr-code" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://wa.me/573115668610" alt="QR WhatsApp">
+  </section>
+  
+  <!-- Pie de página -->
+  <footer data-aos="fade-in">
+    <p>&copy; 2025 Espanta Zombies. Todos los derechos reservados.</p>
+  </footer>
+  
+  <!-- Botón de volver arriba -->
+  <button class="back-to-top" id="backToTop">&#8679;</button>
+  
+  <!-- Efectos de sonido al pasar el mouse en los ítems (opcional) -->
+  <script>
+    document.querySelectorAll('.menu-item').forEach(item => {
+      item.addEventListener('mouseenter', () => {
+        const audio = new Audio('https://www.soundjay.com/buttons/sounds/button-30.mp3');
+        audio.volume = 0.2;
+        audio.play();
+      });
+    });
+    
+    // Botón de volver arriba
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      backToTop.style.display = (window.pageYOffset > 300) ? 'block' : 'none';
+    });
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+  
+  <!-- Puzzle Interactivo (Sliding Puzzle) -->
+  <script>
+    const puzzleCanvas = document.getElementById("puzzleCanvas");
+    const puzzleCtx = puzzleCanvas.getContext("2d");
+    const puzzleSize = 3;
+    const tileSize = puzzleCanvas.width / puzzleSize;
+    let puzzleImage = new Image();
+    puzzleImage.src = "https://image.pollinations.ai/prompt/Puzzle%20Dark%20Fantasy";
+    let tiles = [];
+    let blankIndex = puzzleSize * puzzleSize - 1;
+    
+    for (let i = 0; i < puzzleSize * puzzleSize; i++) {
+      tiles[i] = i;
+    }
+    
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+    
+    function drawPuzzle() {
+      puzzleCtx.clearRect(0, 0, puzzleCanvas.width, puzzleCanvas.height);
+      for (let i = 0; i < tiles.length; i++) {
+        if (tiles[i] === blankIndex) continue;
+        let sx = (tiles[i] % puzzleSize) * tileSize;
+        let sy = Math.floor(tiles[i] / puzzleSize) * tileSize;
+        let dx = (i % puzzleSize) * tileSize;
+        let dy = Math.floor(i / puzzleSize) * tileSize;
+        puzzleCtx.drawImage(puzzleImage, sx, sy, tileSize, tileSize, dx, dy, tileSize, tileSize);
+      }
+      let blankPos = tiles.indexOf(blankIndex);
+      let dx = (blankPos % puzzleSize) * tileSize;
+      let dy = Math.floor(blankPos / puzzleSize) * tileSize;
+      puzzleCtx.fillStyle = "black";
+      puzzleCtx.fillRect(dx, dy, tileSize, tileSize);
+    }
+    
+    puzzleImage.onload = function() {
+      shuffle(tiles);
+      drawPuzzle();
+    };
+    
+    puzzleCanvas.addEventListener("click", function(e) {
+      let rect = puzzleCanvas.getBoundingClientRect();
+      let x = e.clientX - rect.left;
+      let y = e.clientY - rect.top;
+      let col = Math.floor(x / tileSize);
+      let row = Math.floor(y / tileSize);
+      let index = row * puzzleSize + col;
+      let blankPos = tiles.indexOf(blankIndex);
+      let blankCol = blankPos % puzzleSize;
+      let blankRow = Math.floor(blankPos / puzzleSize);
+      if ((Math.abs(blankCol - col) == 1 && blankRow == row) || (Math.abs(blankRow - row) == 1 && blankCol == col)) {
+        [tiles[index], tiles[blankPos]] = [tiles[blankPos], tiles[index]];
+        drawPuzzle();
+        if (tiles.every((val, idx) => val === idx)) {
+          setTimeout(() => { alert("¡Felicidades, completaste el puzzle!"); }, 100);
+        }
+      }
+    });
+  </script>
+  
+  <!-- Inicialización de Particles.js -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script>
+    particlesJS("particles-js", {
+      "particles": {
+        "number": { "value": 50, "density": { "enable": true, "value_area": 800 } },
+        "color": { "value": "#ffffff" },
+        "shape": { "type": "circle" },
+        "opacity": { "value": 0.5, "random": false },
+        "size": { "value": 3, "random": true },
+        "line_linked": {
+          "enable": true,
+          "distance": 150,
+          "color": "#ffffff",
+          "opacity": 0.4,
+          "width": 1
+        },
+        "move": { "enable": true, "speed": 2, "direction": "none", "random": false, "straight": false }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": { "enable": true, "mode": "repulse" },
+          "onclick": { "enable": true, "mode": "push" }
+        },
+        "modes": {
+          "repulse": { "distance": 100 },
+          "push": { "particles_nb": 4 }
+        }
+      },
+      "retina_detect": true
+    });
+  </script>
+  
+  <!-- Inicialización de AOS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" integrity="sha512-GNB2bNw8GMa7D9hEwy9+fqglovHwq6+VDv5ZVQle5LF4Y+z8p5h72T+4YGj/HG0ecmr1+S+o5fG/8+RP2+tYsw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    AOS.init({ duration: 1000, once: true });
+  </script>
+  
+  <!-- NUEVAS MEJORAS: Modo Terror y Efectos Aleatorios -->
+  <script>
+    // Variable para controlar el estado del modo terror
+    let terrorModeActive = false;
+    
+    // Elementos y recursos para efectos de terror
+    const ambientSound = new Audio('https://www.soundjay.com/horror/sounds/ambience-1.mp3');
+    ambientSound.loop = true;
+    
+    const jumpScareImages = [
+      'https://image.pollinations.ai/prompt/Scary%20face%20dark%20fantasy',
+      'https://image.pollinations.ai/prompt/Scary%20skull%20dark%20fantasy',
+      'https://image.pollinations.ai/prompt/Scary%20ghost%20dark%20fantasy'
+    ];
+    
+    const terrorSounds = [
+      'https://www.soundjay.com/horror/sounds/ghost-scream-1.mp3',
+      'https://www.soundjay.com/horror/sounds/scream-1.mp3',
+      'https://www.soundjay.com/horror/sounds/scream-2.mp3',
+      'https://www.soundjay.com/horror/sounds/scream-3.mp3'
+    ];
+    
+    const ghostImages = [
+      'https://image.pollinations.ai/prompt/Ghost%20dark%20fantasy',
+      'https://image.pollinations.ai/prompt/Ethereal%20ghost%20dark%20fantasy',
+      'https://image.pollinations.ai/prompt/Phantom%20dark%20fantasy'
+    ];
+    
+    // Función para activar/desactivar el modo terror
+    const lightsToggle = document.getElementById('lightsToggle');
+    lightsToggle.addEventListener('click', () => {
+      terrorModeActive = !terrorModeActive;
+      if(terrorModeActive) {
+        document.body.classList.add('dark-mode');
+        lightsToggle.textContent = "Terror Mode On";
+        ambientSound.play();
+        // Inicia efectos de jump scare y fantasmas con mayor frecuencia
+        scheduleJumpScare(20000, 40000);
+        scheduleGhost(15000, 30000);
+      } else {
+        document.body.classList.remove('dark-mode');
+        lightsToggle.textContent = "Terror Mode Off";
+        ambientSound.pause();
+      }
+    });
+    
+    // Función para disparar un jump scare aleatorio
+    function triggerJumpScare() {
+      if(!terrorModeActive) return;
+      
+      const scareDiv = document.createElement('div');
+      scareDiv.id = 'jumpScare';
+      scareDiv.style.position = 'fixed';
+      scareDiv.style.top = 0;
+      scareDiv.style.left = 0;
+      scareDiv.style.width = '100%';
+      scareDiv.style.height = '100%';
+      scareDiv.style.backgroundColor = 'black';
+      scareDiv.style.display = 'flex';
+      scareDiv.style.alignItems = 'center';
+      scareDiv.style.justifyContent = 'center';
+      scareDiv.style.zIndex = 9999;
+      scareDiv.style.opacity = 0;
+      scareDiv.style.transition = 'opacity 0.5s';
+      
+      // Selecciona aleatoriamente una imagen para el jump scare
+      const scareImg = document.createElement('img');
+      scareImg.src = jumpScareImages[Math.floor(Math.random() * jumpScareImages.length)];
+      scareImg.style.maxWidth = '80%';
+      scareImg.style.border = '5px solid #ff0000';
+      scareDiv.appendChild(scareImg);
+      
+      document.body.appendChild(scareDiv);
+      
+      // Reproduce aleatoriamente un sonido de terror
+      const scareAudio = new Audio(terrorSounds[Math.floor(Math.random() * terrorSounds.length)]);
+      scareAudio.volume = 1.0;
+      scareAudio.play();
+      
+      setTimeout(() => { scareDiv.style.opacity = 1; }, 100);
+      setTimeout(() => {
+        scareDiv.style.opacity = 0;
+        setTimeout(() => { if(scareDiv.parentNode) scareDiv.parentNode.removeChild(scareDiv); }, 500);
+      }, 2000);
+    }
+    
+    // Función para programar jump scares en intervalos aleatorios
+    function scheduleJumpScare(minDelay, maxDelay) {
+      if(!terrorModeActive) return;
+      const delay = Math.floor(Math.random() * (maxDelay - minDelay)) + minDelay;
+      setTimeout(() => {
+        triggerJumpScare();
+        scheduleJumpScare(minDelay, maxDelay);
+      }, delay);
+    }
+    
+    // Función para mostrar un fantasma animado
+    function spawnGhost() {
+      if(!terrorModeActive) return;
+      const ghost = document.createElement('img');
+      ghost.src = ghostImages[Math.floor(Math.random() * ghostImages.length)];
+      ghost.style.position = 'fixed';
+      ghost.style.top = Math.random() * 90 + 'vh';
+      ghost.style.left = Math.random() * 90 + 'vw';
+      ghost.style.width = '100px';
+      ghost.style.opacity = 0;
+      ghost.style.transition = 'opacity 1s ease-in-out, transform 3s';
+      ghost.style.zIndex = 1000;
+      document.body.appendChild(ghost);
+      
+      setTimeout(() => { ghost.style.opacity = 1; ghost.style.transform = 'translateY(-20px)'; }, 100);
+      setTimeout(() => {
+        ghost.style.opacity = 0;
+        setTimeout(() => { if(ghost.parentNode) ghost.parentNode.removeChild(ghost); }, 1000);
+      }, 5000);
+    }
+    
+    // Función para programar apariciones de fantasmas en intervalos aleatorios
+    function scheduleGhost(minDelay, maxDelay) {
+      if(!terrorModeActive) return;
+      const delay = Math.floor(Math.random() * (maxDelay - minDelay)) + minDelay;
+      setTimeout(() => {
+        spawnGhost();
+        scheduleGhost(minDelay, maxDelay);
+      }, delay);
+    }
+  </script>
+</body>
+</html>
